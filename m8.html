@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Astro Go PayTV Status</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #0f172a;
+    color: #e2e8f0;
+}
+
+.container {
+    width: 70%;
+    margin: 20px auto;
+}
+
+/* ✅ FLEX ROW */
+.row {
+    display: flex;
+    gap: 15px;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.header h1 { margin: 0; }
+.header p { color: #94a3b8; }
+
+.section {
+    background: #1e293b;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    flex: 1; /* ✅ auto equal width */
+}
+
+.section h2 {
+    font-size: 15px;
+    color: #38bdf8;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+
+th, td {
+    padding: 8px;
+    text-align: left;
+}
+
+td {
+    border-top: 1px solid #334155;
+}
+
+th {
+    color: #94a3b8;
+}
+
+/* colors */
+.good { color: #22c55e; }
+.warn { color: #facc15; }
+.bad { color: #ef4444; }
+
+.badge {
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-size: 12px;
+}
+.green { background:#14532d; }
+.yellow { background:#78350f; }
+.red { background:#7f1d1d; }
+
+/* progress bar */
+.progress {
+    background: #334155;
+    border-radius: 6px;
+    height: 8px;
+    margin-top: 5px;
+}
+
+.progress-bar {
+    height: 100%;
+    background: #22c55e;
+    border-radius: 6px;
+}
+
+.footer {
+    text-align: center;
+    font-size: 12px;
+    color: #64748b;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="header">
+    <h1>Astro Go PayTV Big Screen Status</h1>
+    <p>Timeline: 3 June - 22 June</p>
+    <p>Environment: Beta-Production</p>
+</div>
+
+<!-- ✅ SIDE BY SIDE TABLES -->
+<div class="row">
+
+    <!-- Overall -->
+    <div class="section">
+        <h2>Overall M8 Release Note Status</h2>
+        <table>
+            <tr>
+                <th>Platform</th>
+                <th>Delivered</th>
+                <th>Validated</th>
+                <th>NA</th>
+                <th>%</th>
+                <th>Status<th>
+            </tr>
+            <tbody id="tableBody"></tbody>
+        </table>
+    </div>
+
+    <!-- M8 Feature -->
+    <div class="section">
+        <h2>Total M8 Feature</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Platform</th>
+                    <th>Total Delivered</th>
+                    <th>Total Validated</th>
+                    <th>%</th>
+                   
+                </tr>
+            </thead>
+            <tbody id="m8Table"></tbody>
+        </table>
+    </div>
+
+    <!-- ✅ NEW BUGS MOVED HERE -->
+    <div class="section">
+        <h2>New Bugs Raised</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Platform</th>
+                    <th>L1</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>AndroidTV</td><td class="warn">29</td></tr>
+                <tr><td>WebOS</td><td class="warn">32</td></tr>
+                <tr><td>Tizen</td><td class="warn">32</td></tr>
+                <tr><td>Vidaa</td><td class="warn">32</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+<!-- BELOW (full width sections remain same) -->
+
+<div class="section">
+    <h2>Bug Fixes Status</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Platform</th>
+                <th>Delivered</th>
+                <th>Reopened</th>
+                <th>Done/Closed</th>
+                <th>Resolved</th>
+                <th>% Completed</th>
+            </tr>
+        </thead>
+        <tbody id="bugTable"></tbody>
+    </table>
+</div>
+
+<script>
+window.onload = function() {
+
+/* ===== OVERALL DATA ===== */
+const data = [
+ {name:"AndroidTV", delivered:111, validated:30, na:43},
+ {name:"WebOS", delivered:115, validated:36, na:39},
+ {name:"Tizen", delivered:115, validated:34, na:39},
+ {name:"Vidaa", delivered:115, validated:40, na:39}
+];
+
+let html = "";
+
+data.forEach(p => {
+    let percent = ((p.validated / p.delivered) * 100).toFixed(1);
+    let statusClass = percent < 5 ? "red" : "yellow";
+    let statusText = "LOW";
+
+    html += `
+    <tr>
+        <td>${p.name}</td>
+        <td>${p.delivered}</td>
+        <td class="warn">${p.validated}</td>
+        <td>${p.na}</td>
+        <td>
+            ${percent}%
+            <div class="progress">
+                <div class="progress-bar" style="width:${percent}%"></div>
+            </div>
+        </td>
+        <td><span class="badge ${statusClass}">${statusText}</span></td>
+    </tr>`;
+});
+
+document.getElementById("tableBody").innerHTML = html;
+
+
+/* ===== M8 FEATURE ===== */
+const m8Data = [
+ {name:"AndroidTV", delivered:7, validated:4},
+ {name:"WebOS", delivered:7, validated:4},
+ {name:"Tizen", delivered:7, validated:5},
+ {name:"Vidaa", delivered:7, validated:5}
+];
+
+let m8HTML = "";
+
+m8Data.forEach(p => {
+    let percent = ((p.validated / p.delivered) * 100).toFixed(1);
+    let color = percent < 50 ? "warn" : "good";
+
+    m8HTML += `
+    <tr>
+        <td>${p.name}</td>
+        <td>${p.delivered}</td>
+        <td class="good">${p.validated}</td>
+        <td class="${color}">
+            ${percent}%
+            <div class="progress">
+                <div class="progress-bar" style="width:${percent}%"></div>
+            </div>
+        </td>
+    </tr>`;
+});
+
+document.getElementById("m8Table").innerHTML = m8HTML;
+
+
+/* ===== BUG FIX DATA ===== */
+const bugData = [
+ { name:"AndroidTV", delivered:36, reopened:0, doneClosed:11, resolved:25 },
+ { name:"WebOS", delivered:41, reopened:2, doneClosed:24, resolved:15 },
+ { name:"Tizen", delivered:39, reopened:2, doneClosed:24, resolved:13 },
+ { name:"Vidaa", delivered:40, reopened:1, doneClosed:24, resolved:15 }
+];
+
+let bugHTML = "";
+
+bugData.forEach(p => {
+
+    let percentage = ((p.doneClosed / p.delivered) * 100).toFixed(1);
+    let color = percentage == 0 ? "bad" : "good";
+
+    bugHTML += `
+    <tr>
+        <td>${p.name}</td>
+        <td>${p.delivered}</td>
+        <td>${p.reopened}</td>
+        <td>${p.doneClosed}</td>
+        <td>${p.resolved}</td>
+        <td class="${color}">
+            ${percentage}%
+            <div class="progress">
+                <div class="progress-bar" style="width:${percentage}%"></div>
+            </div>
+        </td>
+    </tr>`;
+});
+
+document.getElementById("bugTable").innerHTML = bugHTML;
+
+};
+</script>
