@@ -189,13 +189,9 @@ td {
 <h3>Bug Raised Breakdown</h3>
 <table>
 <tr><th>Category</th><th>Total</th></tr>
-<tr><td>Component Functionality</td><td class="bad">103</td></tr>
-<tr><td>UI/UX</td><td class="warn">64</td></tr>
-<tr><td>Analytic</td><td>3</td></tr>
-<tr><td>SSAI</td><td>3</td></tr>
-<tr><td>TA</td><td>2</td></tr>
-<tr><td>Crashlytics</td><td>1</td></tr>
-<tr><td>CSAI</td><td>1</td></tr>
+<tr><td>Component Functionality</td><td class="bad">79</td></tr>
+<tr><td>UI/UX</td><td class="warn">76</td></tr>
+<tr><td>SSAI</td><td>4</td></tr>
 </table>
 </div>
 
@@ -207,10 +203,10 @@ td {
 
 /* OVERALL + PROGRESS */
 const overall = [
- {n:"AndroidTV",d:111,v:31,na:43},
- {n:"WebOS",d:115,v:38,na:39},
- {n:"Tizen",d:115,v:35,na:39},
- {n:"Vidaa",d:115,v:43,na:39}
+ {n:"AndroidTV",d:111,v:32,na:43},
+ {n:"WebOS",d:115,v:44,na:39},
+ {n:"Tizen",d:115,v:43,na:39},
+ {n:"Vidaa",d:115,v:45,na:39}
 ];
 
 document.getElementById("overallTable").innerHTML =
@@ -242,7 +238,7 @@ m8.map(p=>{
 }).join("");
 
 /* BUG RAISED */
-const br=[34,36,37,37];
+const br=[41,39,39,40];
 const names=["AndroidTV","WebOS","Tizen","Vidaa"];
 let total=0, html="";
 
