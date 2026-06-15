@@ -36,6 +36,7 @@ html, body {
 }
 
 .bug-fix { flex: 2; }
+.bug-raised { flex: 1; }
 .bug-breakdown { flex: 1; }
 
 /* ✅ HEADER RESTORED */
@@ -141,7 +142,7 @@ td {
 
 <!-- M8 -->
 <div class="section">
-<h3>Total M8 Feature</h3>
+<h3>Total M8 Feature Delivered</h3>
 <table>
 <tr>
 <th>Platform</th><th>Delivered</th><th>Validated</th><th>%</th>
@@ -150,20 +151,14 @@ td {
 </table>
 </div>
 
-<!-- BUG -->
+<!-- M8 DUPLICATE -->
 <div class="section">
-<div class="section-header">
-<h3>New Bugs Raised</h3>
-
-<select class="dropdown" onchange="handleMenu(this)">
-<option value="">JIRA</option>
-<option value="jira">Total M8 JIRA Raised Dashboard</option>
-</select>
-</div>
-
+<h3>Total M0-M7 Feature Delivered</h3>
 <table>
-<tr><th>Platform</th><th>L1</th></tr>
-<tbody id="bugRaisedTable"></tbody>
+<tr>
+<th>Platform</th><th>Delivered</th><th>Validated</th><th>%</th>
+</tr>
+<tbody id="m8Table2"></tbody>
 </table>
 </div>
 
@@ -184,14 +179,29 @@ td {
 </table>
 </div>
 
+<!-- BUG RAISED -->
+<div class="section bug-raised">
+<div class="section-header">
+<h3>New Bugs Raised</h3>
+
+<select class="dropdown" onchange="handleMenu(this)">
+<option value="">JIRA</option>
+<option value="jira">Total M8 JIRA Raised Dashboard</option>
+</select>
+</div>
+
+<table>
+<tr><th>Platform</th><th>L1</th></tr>
+<tbody id="bugRaisedTable"></tbody>
+</table>
+</div>
+
 <!-- BREAKDOWN -->
 <div class="section bug-breakdown">
 <h3>Bug Raised Breakdown</h3>
 <table>
 <tr><th>Category</th><th>Total</th></tr>
-<tr><td>Component Functionality</td><td class="bad">79</td></tr>
-<tr><td>UI/UX</td><td class="warn">76</td></tr>
-<tr><td>SSAI</td><td>4</td></tr>
+<tbody id="bugBreakdownTable"></tbody>
 </table>
 </div>
 
@@ -228,8 +238,27 @@ const m8 = [
  {n:"Vidaa",d:7,v:5}
 ];
 
+/* M7 + PROGRESS */
+const m7 = [
+ {n:"AndroidTV",d:104,v:28},
+ {n:"WebOS",d:108,v:40},
+ {n:"Tizen",d:108,v:38},
+ {n:"Vidaa",d:108,v:40}
+]
+
+
 document.getElementById("m8Table").innerHTML =
 m8.map(p=>{
+ let pct=(p.v/p.d*100).toFixed(1);
+ return `<tr>
+ <td>${p.n}</td><td>${p.d}</td><td class="good">${p.v}</td>
+ <td>${pct}%<div class="progress"><div class="progress-bar" style="width:${pct}%"></div></div></td>
+ </tr>`;
+}).join("");
+
+/* M8 DUPLICATE + PROGRESS */
+document.getElementById("m8Table2").innerHTML =
+m7.map(p=>{
  let pct=(p.v/p.d*100).toFixed(1);
  return `<tr>
  <td>${p.n}</td><td>${p.d}</td><td class="good">${p.v}</td>
@@ -266,6 +295,24 @@ bf.map(p=>{
  <td>${pct}%<div class="progress"><div class="progress-bar" style="width:${pct}%"></div></div></td>
  </tr>`;
 }).join("");
+
+/* BUG BREAKDOWN + TOTAL SUM */
+const breakdown = [
+ {c:"Component Functionality",t:79,cl:"bad"},
+ {c:"UI/UX",t:76,cl:"warn"},
+ {c:"SSAI",t:4,cl:""}
+];
+
+let breakdownTotal = 0;
+let breakdownHtml = "";
+
+for(let i=0;i<breakdown.length;i++){
+ breakdownTotal += breakdown[i].t;
+ breakdownHtml += `<tr><td>${breakdown[i].c}</td><td class="${breakdown[i].cl}">${breakdown[i].t}</td></tr>`;
+}
+
+breakdownHtml += `<tr><td><b>Total</b></td><td class="good"><b>${breakdownTotal}</b></td></tr>`;
+document.getElementById("bugBreakdownTable").innerHTML = breakdownHtml;
 
 /* DROPDOWN */
 function handleMenu(select){
