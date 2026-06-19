@@ -212,10 +212,10 @@ td {
 
 /* OVERALL + PROGRESS */
 const overall = [
- {n:"AndroidTV",d:111,v:47,b:1,na:43},
- {n:"WebOS",d:115,v:51,b:0,na:39},
- {n:"Tizen",d:115,v:51,b:0,na:39},
- {n:"Vidaa",d:115,v:51,b:0,na:39}
+ {n:"AndroidTV",d:111,v:51,b:1,na:43},
+ {n:"WebOS",d:115,v:53,b:0,na:39},
+ {n:"Tizen",d:115,v:55,b:0,na:39},
+ {n:"Vidaa",d:115,v:57,b:0,na:39}
 ];
 
 document.getElementById("overallTable").innerHTML =
@@ -239,10 +239,10 @@ const m8 = [
 
 /* M7 + PROGRESS */
 const m7 = [
- {n:"AndroidTV",d:104,v:42,b:0},
- {n:"WebOS",d:108,v:46,b:0},
- {n:"Tizen",d:108,v:45,b:0},
- {n:"Vidaa",d:108,v:45,b:0}
+ {n:"AndroidTV",d:104,v:46,b:1},
+ {n:"WebOS",d:108,v:47,b:0},
+ {n:"Tizen",d:108,v:49,b:0},
+ {n:"Vidaa",d:108,v:51,b:0}
 ]
 /* M8 PROGRESS */
 document.getElementById("m8Table").innerHTML =
@@ -265,7 +265,7 @@ m7.map(p=>{
 }).join("");
 
 /* BUG RAISED */
-const br=[55,54,53,55];
+const br=[58,60,59,61];
 const names=["AndroidTV","WebOS","Tizen","Vidaa"];
 let total=0, html="";
 
@@ -295,8 +295,8 @@ bf.map(p=>{
 
 /* BUG BREAKDOWN + TOTAL SUM */
 const breakdown = [
- {c:"Component Functionality",t:108,cl:"bad"},
- {c:"UI/UX",t:102,cl:"warn"},
+ {c:"Component Functionality",t:109,cl:"bad"},
+ {c:"UI/UX",t:122,cl:"warn"},
  {c:"SSAI",t:7,cl:""}
 ];
 
