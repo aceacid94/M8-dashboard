@@ -265,7 +265,7 @@ m7.map(p=>{
 }).join("");
 
 /* BUG RAISED */
-const br=[73,75,74,76];
+const br=[81,82,80,82];
 const names=["AndroidTV","WebOS","Tizen","Vidaa"];
 let total=0, html="";
 
@@ -278,10 +278,10 @@ document.getElementById("bugRaisedTable").innerHTML=html;
 
 /* BUG FIX + PROGRESS */
 const bf=[
- {n:"AndroidTV",d:36,res:23,done:13,r:0},
- {n:"WebOS",d:41,res:12,done:27,r:2},
- {n:"Tizen",d:39,res:11,done:26,r:2},
- {n:"Vidaa",d:40,res:12,done:27,r:1}
+ {n:"AndroidTV",d:36,res:3,done:28,r:5},
+ {n:"WebOS",d:41,res:4,done:33,r:4},
+ {n:"Tizen",d:39,res:3,done:32,r:4},
+ {n:"Vidaa",d:40,res:3,done:34,r:3}
 ];
 
 document.getElementById("bugFixTable").innerHTML =
@@ -295,8 +295,8 @@ bf.map(p=>{
 
 /* BUG BREAKDOWN + TOTAL SUM */
 const breakdown = [
- {c:"Component Functionality",t:134,cl:"bad"},
- {c:"UI/UX",t:157,cl:"warn"},
+ {c:"Component Functionality",t:153,cl:"bad"},
+ {c:"UI/UX",t:165,cl:"warn"},
  {c:"SSAI",t:7,cl:""}
 ];
 
